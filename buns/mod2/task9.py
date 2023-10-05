@@ -9,4 +9,4 @@ for n in vowels:
 for n in consonants:
     consonants_count += i.count(n)
 
-print(f"{vowels_count}, {consonants_count}")
+print(f"{vowels_count} {consonants_count}")

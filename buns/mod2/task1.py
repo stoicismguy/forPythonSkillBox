@@ -1,3 +1,4 @@
-a = int(input())
-b = int(input())
-print(a % b)
+i = input()
+a = int(i[:i.find(",")])
+b = int(i[i.find(",")+1::])
+print(a%b)

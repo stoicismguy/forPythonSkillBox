@@ -1,5 +1,6 @@
-n = input()
-m = int(input())
+i = input()
+n = i[:i.find(","):]
+m = int(i[i.find(",")+1::])
 code = ord(n) + m
 a = ord("a")
 if m >= 0:
