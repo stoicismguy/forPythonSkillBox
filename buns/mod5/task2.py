@@ -1,30 +1,63 @@
 class Node:
-    def __init__(self, value):
-        self.value = value
-        self.next = None
-        self.previous = None
+    def __init__(self, data):
+        self.data = data
+        self.nref = None
+        self.pref = None
 
 
 class Queue:
     def __init__(self):
-        self.tail = None
-        self.head = None
+        self.start = None
+        self.end = None
 
-    def enqueue(self, item):
-        if self.tail is None:
-            self.head = item
-            self.tail = item
+    def push(self, item):
+        if self.start is None:
+            self.end = item
+            self.start = item
         else:
-            self.tail.next = item
-            self.tail = item
+            self.end.nref = item
+            item.pref = self.end
+            self.end = item
 
-    def dequeue(self):
-        if self.head is not None:
-            result = self.head
-            self.head = self.head.next
-            if self.head is None:
-                self.tail = None
-            return result.value
+    def pop(self):
+        if self.start is not None:
+            result = self.start
+            self.start = self.start.nref
+            return result.data
         else:
             raise Exception("Очередь пуста")
 
+    def insert(self, index, item):
+        if index < 0:
+            raise IndexError
+
+        current = self.start
+        for i in range(index):
+            if current is None:
+                raise IndexError
+            current = current.nref
+
+        if current is None:
+            item.pref = self.end
+            self.end.nref = item
+            self.end = item
+            return
+
+        if current.pref is not None:
+            current.pref.nref = item
+            item.pref = current.pref
+
+        current.pref = item
+        item.nref = current
+
+        if current == self.start:
+            self.start = item
+
+    def print(self):
+        current = self.start
+        while True:
+            if current is not None:
+                print(current.data)
+                current = current.nref
+            else:
+                return

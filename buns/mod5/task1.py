@@ -1,31 +1,36 @@
 class Node:
     def __init__(self, value):
-        self.value = value
-        self.next = None
+        self.data = value
+        self.pref = None
 
     def get_value(self):
-        return self.value
+        return self.data
 
 
 class Stack:
     def __init__(self):
-        self.head = None
+        self.end = None
 
     def push(self, item):
-        if self.head is None:
-            self.head = item
+        if self.end is None:
+            self.end = item
         else:
-            item.next = self.head
-            self.head = item
+            item.pref = self.end
+            self.end = item
 
     def pop(self):
-        if self.head is None:
+        if self.end is None:
             raise Exception("Стек пуст")
-        result = self.head
-        self.head = result.next
-        result.next = None
-        return result.value
+        result = self.end
+        self.end = result.pref
+        result.pref = None
+        return result.data
 
-    def peek(self):
-        return self.head.value
-
+    def print(self):
+        start = self.end
+        while True:
+            if start is not None:
+                print(start.data)
+                start = start.pref
+            else:
+                return
