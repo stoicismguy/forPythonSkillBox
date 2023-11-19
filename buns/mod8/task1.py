@@ -200,9 +200,9 @@ class CargoShip(Ship, Cargo):
         Cargo.__init__(self, carrying)
 
 
-class Plane(Transport, Passenger):
-    def __init__(self, coordinates, speed, brand, year, number, passengers_capacity, number_of_passengers):
-        Transport.__init__(self, coordinates, speed, brand, year, number)
+class MyPlane(Plane, Passenger):
+    def __init__(self, coordinates, speed, brand, year, number, height, passengers_capacity, number_of_passengers):
+        Plane.__init__(self, coordinates, speed, brand, year, number, height)
         Passenger.__init__(self, passengers_capacity, number_of_passengers)
 
 
