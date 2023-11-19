@@ -127,9 +127,9 @@ class Cargo:
 
 
 class Plane(Transport):
-    def __init__(self, coordinates, speed, brand, year, number, height):
+    def __init__(self, height, *args, **kwargs):
         self.height = height
-        super().__init__(coordinates, speed, brand, year, number)
+        Transport.__init__(self, *args, **kwargs)
 
     @property
     def height(self):
@@ -145,14 +145,14 @@ class Plane(Transport):
 
 
 class Auto(Transport):
-    def __init__(self, coordinates, speed, brand, year, number):
-        super().__init__(coordinates, speed, brand, year, number)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
 
 class Ship(Transport):
-    def __init__(self, coordinates, speed, brand, year, number, port):
+    def __init__(self, port, *args, **kwargs):
         self.port = port
-        super().__init__(coordinates, speed, brand, year, number)
+        Transport.__init__(self, *args, **kwargs)
 
     @property
     def port(self):
@@ -167,8 +167,8 @@ class Ship(Transport):
 
 
 class Car(Auto):
-    def __init__(self, coordinates, speed, brand, year, number):
-        super().__init__(coordinates, speed, brand, year, number)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
 
 class Bus(Auto, Passenger):
@@ -185,28 +185,30 @@ class CargoAuto(Auto, Cargo):
 
 class Boat(Ship):
     def __init__(self, coordinates, speed, brand, year, number, port):
-        super().__init__(coordinates, speed, brand, year, number, port)
+        super().__init__(port, coordinates, speed, brand, year, number)
 
 
 class PassengerShip(Ship, Passenger):
     def __init__(self, coordinates, speed, brand, year, number, port, passengers_capacity, number_of_passengers):
-        Ship.__init__(self, coordinates, speed, brand, year, number, port)
+        Ship.__init__(self,port, coordinates, speed, brand, year, number, )
         Passenger.__init__(self, passengers_capacity, number_of_passengers)
 
 
 class CargoShip(Ship, Cargo):
     def __init__(self, coordinates, speed, brand, year, number, port, carrying):
-        Ship.__init__(self, coordinates, speed, brand, year, number, port)
+        Ship.__init__(self, port, coordinates, speed, brand, year, number)
         Cargo.__init__(self, carrying)
 
 
 class MyPlane(Plane, Passenger):
     def __init__(self, coordinates, speed, brand, year, number, height, passengers_capacity, number_of_passengers):
-        Plane.__init__(self, coordinates, speed, brand, year, number, height)
+        Plane.__init__(self, height, coordinates, speed, brand, year, number)
         Passenger.__init__(self, passengers_capacity, number_of_passengers)
 
 
 class SeaPlane(Plane, Ship):
-    def __init__(self, coordinates, speed, brand, year, number, passengers_capacity, number_of_passengers, port):
-        Plane.__init__(self, coordinates, speed, brand, year, number, passengers_capacity, number_of_passengers)
-        Ship.__init__(self, coordinates, speed, brand, year, number, port)
+    def __init__(self, height, coordinates, speed, brand, year, number, port):
+        Ship.__init__(self, port, coordinates, speed, brand, year, number)
+        Plane.__init__(self, height, coordinates, speed, brand, year, number)
+
+
